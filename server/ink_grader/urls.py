@@ -20,5 +20,5 @@ from django.urls import path, include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('ink_grader_app.urls')),
+    path('get_score/', include('ink_grader_app.urls')),
 ]
