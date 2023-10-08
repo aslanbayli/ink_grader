@@ -1,9 +1,176 @@
-{% extends 'base.html' %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ink Grader</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: 
+                linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+                url('https://img.freepik.com/free-vector/halftone-background-with-circles_23-2148907689.jpg?w=1800&t=st=1696749561~exp=1696750161~hmac=ab52609633e5318f41979e10ca9a7aefeeb874d65b4eec5f569386ecbab601ba') no-repeat center center fixed; 
+            -webkit-background-size: cover;
+            -moz-background-size: cover;
+            -o-background-size: cover;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
 
-{% block content %}
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Upload">
-</form>
-{% endblock %}
+        header {
+            background-color: rgb(5 6 25);
+            padding: 15px;
+            color: #fff;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+        }
+
+        main {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        h2 {
+            color: #fff;
+            margin-bottom: 20px;
+        }
+
+        .circle-btn {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #d678af;
+            color: #fff;
+            border: none;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .circle-btn:hover {
+            background-color: #8640a2;
+        }
+
+        .circle-btn input[type="file"] {
+            display: none;
+            
+        }
+
+        .square-btn {
+            width: 100px;
+            height: 50px;
+            background-color: #4CAF50;
+            color: #fff;
+            border: none;
+            margin: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s ease;
+        }
+
+        .square-btn:hover {
+            background-color: #45a049;
+        }
+
+        .circle-label {
+            position: absolute;
+            cursor: pointer;
+        }
+
+        footer {
+            background-color:  rgb(5 6 25);
+            padding: 10px;
+            color: #fff;
+            text-align: center;
+        }
+    </style>
+
+
+<!-- Add this in your <head> tag -->
+    <style>
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: white;
+            border-radius: 50%;
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            createFallingStars();
+        });
+    
+        function createFallingStars() {
+            let starField = document.createElement('div');
+            document.body.appendChild(starField);
+            for (let i = 0; i < 150; i++) {
+                let star = document.createElement('div');
+                star.className = 'star';
+                star.style.top = Math.random() * window.innerHeight + 'px';
+                star.style.left = Math.random() * window.innerWidth + 'px';
+                starField.appendChild(star);
+                animateStar(star);
+            }
+        }
+    
+        function animateStar(star) {
+            let initialTop = parseFloat(star.style.top);
+            function fall() {
+                if (parseFloat(star.style.top) < window.innerHeight) {
+                    star.style.top = parseFloat(star.style.top) + 1 + 'px';
+                    requestAnimationFrame(fall);
+                } else {
+                    star.style.top = initialTop + 'px';
+                    animateStar(star);
+                }
+            }
+            fall();
+        }
+    </script>
+    
+</head>
+<body>
+    <header>
+        <h1>Ink Grader</h1>
+    </header>
+    <main>
+        <h2>Upload Your Files</h2>
+        <form method="post" enctype="multipart/form-data" style="text-align: center;">
+            {% csrf_token %}
+            <label class="circle-btn" for="{{ form.quiz_file.id_for_label }}">
+                {{ form.quiz_file }}
+                {{ form.quiz_file.label }}
+            </label>
+            <label class="circle-btn" for="{{ form.answer_key_file.id_for_label }}">
+                {{ form.answer_key_file }}
+                {{ form.answer_key_file.label }}
+            </label>
+            <label class="circle-btn" for="{{ form.student_answers.id_for_label }}">
+                {{ form.student_answers }}
+                {{ form.student_answers.label }}
+            </label>
+            <br>
+            <input type="submit" class="square-btn" value="Grade">
+        </form>
+
+    </main>
+    <footer>
+        <p>&copy; 2023 Ink Grader. All Rights Reserved.</p>
+    </footer>
+</body>
+</html>
