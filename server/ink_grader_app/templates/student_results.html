@@ -1,6 +1,12 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Extracted Text</h1>
-<pre>{{ text }}</pre>
+    <h2 style="margin: 5% 0;">Results</h2>
+    <div class="list-group">
+    {% for q in text %}
+        <div class="list-group-item">
+            <div>{{ q }}</div>
+        </div>
+    {% endfor %}
+    </div>
 {% endblock %}
