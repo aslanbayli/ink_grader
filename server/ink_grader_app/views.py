@@ -42,15 +42,28 @@ def get_student_score(quiz, answer_key, student_answers):
 
             {"role": "assistant", "content": "Of course, here is the students responses along with a total \
                 number of points awarded for the quiz, with points awarded per question shown, and comments on \
-                where the student went wrong on questions they didn't score full points. Return the results in \
-                a JSON format. Reply with only the answer in JSON form and include no other commentary:"},
+                where the student went wrong on questions they didn't score full points. Include points awarded \
+                for each question. Make sure that the final grade awarded is the sum of points awarded for each question. \
+                Don't put a string after the 'content'. Return the response in the following form, please note that the \
+                values in the form are just examples -" + 
+                '{\
+                    "quiz": "loops", \
+                    "total_points": 10, \
+                    "questions": [\
+                        {\
+                            "number": 1, \
+                            "points": 2, \
+                            "student_answer": "example", \
+                            "feedback": "comments", \
+                            "points_awarded": 1},\
+                        ], \
+                    "final_grade":6 \
+                }'
+            }
         ]
     }
 
     response = requests.post(url, headers=headers, json=data)
-
-    if response.status_code() != 200:
-        raise Exception("Request failed with status %d" % (response.status_code))
     
     return response.json()
 
@@ -102,13 +115,53 @@ def upload_file(request):
             image = image.tobytes()
 
             # get the text from hadwritten student answers
-            # student_text = writing_to_text(image)
+            student_text = writing_to_text(image)
 
             # get student score
-            # student_score = get_student_score(quiz_text, answer_key_text, student_text)
-            student_score = "salam"
+            student_score = get_student_score(quiz_text, answer_key_text, student_text)
 
+            temp = {
+                    "quiz": "Loops in Python",
+                    "total_points": 10,
+                    "questions": [
+                        {
+                            "number": 1, 
+                            "points": 2,            
+                            "student_answer": "1 2 4 6 8 10",           
+                            "feedback": "The correct answer is: 2 4 6 8 10. The student missed the loop declaration and did not use the variable \'i\' to index through the list."        
+                        },        
+                        {           
+                            "number": 2,            
+                            "points": 2,            
+                            "student_answer": "20 A for loop is for a fixed number of\iterations, while a while loop is\for when you want to stop when\Some event occurs.",            
+                            "feedback": "The response is partially correct, but lacks an example of when to use a for loop or a while loop."        
+                        },        
+                        {            
+                            "number": 3,            
+                            "points": 2,            
+                            "student_answer": "[2, 4]",            
+                            "feedback": "The student\'s answer is correct."        
+                        },        
+                        {            
+                            "number": 4,            
+                            "points": 2,            
+                            "student_answer": "4 X=1\While x <= 10:\if x%2 == 0:\print (x)\X+ = 1",            
+                            "feedback": "The student\'s answer is incorrect. It should be:\\x = 1\while x <= 10:\    if x % 2 == 0:\        print(x)\    x += 1"        
+                        },        
+                        {            
+                            "number": 5,           
+                            "points": 2,            
+                            "student_answer": "apple",            
+                            "feedback": "The student\'s answer is correct."        
+                        }
+                    ],    
+
+                    "final_grade": 6
+                }
+
+            # student_score = student_score['choices'][0]['message']['content']
             return render(request, 'student_results.html', {'text': student_score})
+
     else:
         form = UploadFileForm()
         
