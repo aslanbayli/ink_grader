@@ -19,14 +19,18 @@ SECRET_KEY2 = config("SECRET_KEY2")
 RESOURCE_NAME = config("RESOURCE_NAME")
 MODEL_NAME = config("MODEL_NAME")
 
+GPT_SECRET_KEY = config("GPT_SECRET_KEY")
+GPT_ORG_NAME = config("GPT_ORG_NAME")
+
+
 
 def get_student_score(quiz, answer_key, student_answers):
     url = "https://api.openai.com/v1/chat/completions"
 
     headers = {
         "Content-Type": "application/json",
-        "Authorization": "Bearer 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",
-        "OpenAI-Organization": "org-jIj0K3kPqGQuXANsKVjVZc0k"
+        "Authorization": f"Bearer {GPT_SECRET_KEY}",
+        "OpenAI-Organization": GPT_ORG_NAME
     }
 
     data = {
@@ -154,7 +158,7 @@ def print_resp(input_string):
 
         temp = split_strings[-1].split("Quiz")
         arr.append(temp[0])
-        
+
         if len(temp) > 1:
             arr.append("Quiz" + temp[1])
 
@@ -162,5 +166,4 @@ def print_resp(input_string):
         if len(temp) > 1:
             arr.append("Total" + temp[1])
         
-
     return arr
