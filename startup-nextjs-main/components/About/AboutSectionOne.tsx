@@ -24,8 +24,8 @@ const AboutSectionOne = () => {
           <div className="-mx-4 flex flex-wrap items-center">
             <div className="w-full px-4 lg:w-1/2">
               <SectionTitle
-                title="Crafted for Startup, SaaS and Business Sites."
-                paragraph="The main ‘thrust’ is to focus on educating attendees on how to best protect highly vulnerable business applications with interactive panel discussions and roundtables."
+                title="Designed for professors and teachers to make their lifes easier."
+                paragraph="Ink Grader, your trusted education ally, streamlines grading for educators. Our AI-driven platform automates assessment, transforming the grading process. No more manual grading - our intuitive system swiftly evaluates various assignments, from essays to quizzes, with unmatched precision.  Join us on this journey to simplify grading, enhance learning, and prioritize what truly matters in education. Ink Grader: Bridging innovation and education."
                 mb="44px"
               />
 
@@ -35,15 +35,15 @@ const AboutSectionOne = () => {
               >
                 <div className="mx-[-12px] flex flex-wrap">
                   <div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
-                    <List text="Premium quality" />
-                    <List text="Tailwind CSS" />
-                    <List text="Use for lifetime" />
+                    <List text="Django" />
+                    <List text="Python" />
+                    <List text="Google Cloud Vision API" />
                   </div>
 
                   <div className="w-full px-3 sm:w-1/2 lg:w-full xl:w-1/2">
                     <List text="Next.js" />
-                    <List text="Rich documentation" />
-                    <List text="Developer friendly" />
+                    <List text="OpenAI API" />
+                    <List text="Typescript" />
                   </div>
                 </div>
               </div>
@@ -55,7 +55,7 @@ const AboutSectionOne = () => {
                 data-wow-delay=".2s"
               >
                 <Image
-                  src="/images/about/about-image.svg"
+                  src="/images/about/carbon_v3.png"
                   alt="about-image"
                   fill
                   className="mx-auto max-w-full lg:mr-0"

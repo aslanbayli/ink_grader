@@ -15,25 +15,18 @@ const Hero = () => {
                 data-wow-delay=".2s"
               >
                 <h1 className="mb-5 text-3xl font-bold leading-tight text-black dark:text-white sm:text-4xl sm:leading-tight md:text-5xl md:leading-tight">
-                Free and Open-Source Next.js Template for Startup & SaaS
+                Welcome to Ink Grader!
                 </h1>
                 <p className="mb-12 text-base font-medium !leading-relaxed text-body-color dark:text-white dark:opacity-90 sm:text-lg md:text-xl">
-                Startup is free Next.js template for startups and SaaS business websites comes with all the essential pages, components, and sections you need to launch a complete business website, built-with Next 13.x and Tailwind CSS.
+
+Ink Grader is your trusted ally in the world of education, designed to make the lives of professors and teachers easier than ever before. Our cutting-edge platform harnesses the power of artificial intelligence to automate the grading process, revolutionizing the way educators assess and evaluate student work.
+
+With Ink Grader, the days of laborious manual grading are a thing of the past. Our intuitive system can analyze and evaluate a wide range of assignments, from essays to multiple-choice quizzes, with lightning speed and unparalleled accuracy. Say goodbye to stacks of papers and hello to more free time for what matters most – teaching and inspiring your students.
+
+Join us on this exciting journey to simplify your grading workload, enhance the learning experience, and unlock more time for the things that truly matter in education. 
+<br></br>Ink Grader: Where innovation meets education.
                 </p>
-                <div className="flex flex-col items-center justify-center space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0">
-                  <Link
-                    href="https://nextjstemplates.com/templates/saas-starter-startup"
-                    className="rounded-md bg-primary py-4 px-8 text-base font-semibold text-white duration-300 ease-in-out hover:bg-primary/80"
-                  >
-                   🔥 Get Pro
-                  </Link>
-                  <Link
-                    href="https://github.com/NextJSTemplates/startup-nextjs"
-                    className="rounded-md bg-black/20 py-4 px-8 text-base font-semibold text-black duration-300 ease-in-out hover:bg-black/30 dark:bg-white/20 dark:text-white dark:hover:bg-white/30"
-                  >
-                    Star on GitHub
-                  </Link>
-                </div>
+               
               </div>
             </div>
           </div>

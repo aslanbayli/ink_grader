@@ -17,7 +17,7 @@ const Video = () => {
           paragraph="There are many variations of passages of Lorem Ipsum available but the majority have suffered alteration in some form."
           center
           mb="80px"
-        />
+        />  
 
         <div className="-mx-4 flex flex-wrap">
           <div className="w-full px-4">
