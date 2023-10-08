@@ -46,8 +46,8 @@
         }
 
         .circle-btn {
-            width: 100px;
-            height: 100px;
+            width: 150px;
+            height: 150px;
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -71,9 +71,9 @@
         }
 
         .square-btn {
-            width: 100px;
+            width: 150px;
             height: 50px;
-            background-color: #4CAF50;
+            background-color: #a92cdb;
             color: #fff;
             border: none;
             margin: 10px;
@@ -83,8 +83,15 @@
         }
 
         .square-btn:hover {
-            background-color: #45a049;
+            border-radius: 25px;
+            background-color: #6932e8;
         }
+        .buttons-wrapper {
+            display: flex;
+            justify-content: center;
+            gap: 20px;  /* space between buttons */
+        }
+
 
         .circle-label {
             position: absolute;
@@ -152,23 +159,25 @@
         <h2>Upload Your Files</h2>
         <form method="post" enctype="multipart/form-data" style="text-align: center;">
             {% csrf_token %}
-            <label class="circle-btn" for="{{ form.quiz_file.id_for_label }}">
-                {{ form.quiz_file }}
-                {{ form.quiz_file.label }}
-            </label>
-            <label class="circle-btn" for="{{ form.answer_key_file.id_for_label }}">
-                {{ form.answer_key_file }}
-                {{ form.answer_key_file.label }}
-            </label>
-            <label class="circle-btn" for="{{ form.student_answers.id_for_label }}">
-                {{ form.student_answers }}
-                {{ form.student_answers.label }}
-            </label>
+            <div class="buttons-wrapper">  <!-- Added wrapper for side-by-side buttons -->
+                <label class="circle-btn" for="{{ form.quiz_file.id_for_label }}">
+                    {{ form.quiz_file }}
+                    {{ form.quiz_file.label }}
+                </label>
+                <label class="circle-btn" for="{{ form.answer_key_file.id_for_label }}">
+                    {{ form.answer_key_file }}
+                    {{ form.answer_key_file.label }}
+                </label>
+                <label class="circle-btn" for="{{ form.student_answers.id_for_label }}">
+                    {{ form.student_answers }}
+                    {{ form.student_answers.label }}
+                </label>
+            </div>  <!-- End of button wrapper -->
             <br>
-            <input type="submit" class="square-btn" value="Grade">
+            <input type="submit" class="square-btn" value="Grade" disabled> <!-- Initially disabled -->
         </form>
-
     </main>
+    
     <footer>
         <p>&copy; 2023 Ink Grader. All Rights Reserved.</p>
     </footer>
