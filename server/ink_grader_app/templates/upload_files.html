@@ -1,21 +1,19 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h2 class="text-center" >Welcome to InkGrader</h2>
-<h5 class="text-center" style="margin: 3%;">"where education meets AI"</h5>
-<div class="container">
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value="Upload">
-    </form>
-</div>
-<div class="form-group">
-    {% for f in form %}
-        {{ f.label_tag }}
-        {{ f }}
-    {% endfor %}
-    <input type="submit" value="Upload">
-
-</div>
+<h1 class="text-center" >Welcome to <span style="font-weight: bold;">InkGrader</span></h1>
+<h5 class="text-center" style="margin: 3%;">"More time teaching, less time grading..."</h5>
+<form method="post" enctype="multipart/form-data" style="margin: 10px 40%;">
+    {% csrf_token %}
+    <div class="m-5 w-25">
+        {{ form.quiz_file }}
+    </div>
+    <div class="m-5">
+        {{ form.answer_key_file }}
+    </div>
+    <div class="m-5">
+        {{ form.student_answers }}
+    </div>
+    <input type="submit" value="Upload" style="margin: 30px 40%; width: 90px; height: 40px;" class="btn btn-secondary">
+</form>
 {% endblock %}

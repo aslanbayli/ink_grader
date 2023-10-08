@@ -1,14 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <h3>{{ text.quiz }} ({{ text.total_points }} points total)</h3>
-    <h3>Student's score: {{ text.final_grade }}/{{ text.total_points }}</h3>
+    <h2 style="margin: 5% 0;">Results</h2>
     <div class="list-group">
-    {% for q in text.questions %}
+    {% for q in text %}
         <div class="list-group-item">
-            <div>Question: {{ q.number }}</div>
-            <div>Points: {{ q.points }}</div>
-            <div>Feedback: {{ q.feedback }}</div>
+            <div>{{ q }}</div>
         </div>
     {% endfor %}
     </div>
