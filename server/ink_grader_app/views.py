@@ -1,4 +1,4 @@
-from django.http import JsonResponse
+from django.shortcuts import render
 import pdfplumber
 import requests
 from .forms import UploadFileForm
@@ -102,17 +102,17 @@ def upload_file(request):
             image = image.tobytes()
 
             # get the text from hadwritten student answers
-            student_text = writing_to_text(image)
+            # student_text = writing_to_text(image)
 
             # get student score
-            student_score = get_student_score(quiz_text, answer_key_text, student_text)
+            # student_score = get_student_score(quiz_text, answer_key_text, student_text)
+            student_score = "salam"
 
-            response_data = {'student_score': student_score}
-            return JsonResponse(response_data)
+            return render(request, 'student_results.html', {'text': student_score})
     else:
         form = UploadFileForm()
         
-    return JsonResponse({'error': 'Invalid request'})
+    return render(request, 'upload_files.html', {'form': form})
 
 
 
