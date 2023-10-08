@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.http import JsonResponse
 import pdfplumber
 import requests
 from .forms import UploadFileForm
@@ -38,15 +38,20 @@ def get_student_score(quiz, answer_key, student_answers):
                 the quiz, with explanation on where the student went wrong in incorrect responses. \
                 Give points awarded for each question. Keep in mind that the student answers will contain \
                 only the answers in a numbered order where an answer number corresponds to the question \
-                number from the quiz.\n" + "Quiz: " + quiz + "\n\nAnswer Key: " + answer_key + "\n\nStudent's Answers: " + student_answers},
+                number from the quiz.\n" + "Quiz: " + quiz + "\n\nAnswer Key: " + answer_key + "\n\nStudent's Answers:" + student_answers},
 
             {"role": "assistant", "content": "Of course, here is the students responses along with a total \
                 number of points awarded for the quiz, with points awarded per question shown, and comments on \
-                where the student went wrong on questions they didn't score full points. Return the results in a JSON format."},
+                where the student went wrong on questions they didn't score full points. Return the results in \
+                a JSON format. Reply with only the answer in JSON form and include no other commentary:"},
         ]
     }
 
     response = requests.post(url, headers=headers, json=data)
+
+    if response.status_code() != 200:
+        raise Exception("Request failed with status %d" % (response.status_code))
+    
     return response.json()
 
 
@@ -68,21 +73,6 @@ def writing_to_text(image):
     client = vision.ImageAnnotatorClient() # create client for google vision api
     img = vision.Image(content=image) # create image object
     response = client.document_text_detection(image=img) # get response from google vision api
-
-    for page in response.full_text_annotation.pages:
-        for block in page.blocks:
-            print(f"\nBlock confidence: {block.confidence}\n")
-
-            for paragraph in block.paragraphs:
-                print("Paragraph confidence: {}".format(paragraph.confidence))
-
-                for word in paragraph.words:
-                    word_text = "".join([symbol.text for symbol in word.symbols])
-                    print(
-                        "Word text: {} (confidence: {})".format(
-                            word_text, word.confidence
-                        )
-                    )
 
     return response.full_text_annotation.text
 
@@ -116,12 +106,13 @@ def upload_file(request):
 
             # get student score
             student_score = get_student_score(quiz_text, answer_key_text, student_text)
-            
-            return render(request, 'student_results.html', {'text': student_score})
+
+            response_data = {'student_score': student_score}
+            return JsonResponse(response_data)
     else:
         form = UploadFileForm()
         
-    return render(request, 'upload_files.html', {'form': form})
+    return JsonResponse({'error': 'Invalid request'})
 
 
 
