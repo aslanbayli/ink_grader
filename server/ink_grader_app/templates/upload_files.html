@@ -1,9 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form }}
+<h2 class="text-center" >Welcome to InkGrader</h2>
+<h5 class="text-center" style="margin: 3%;">"where education meets AI"</h5>
+<div class="container">
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value="Upload">
+    </form>
+</div>
+<div class="form-group">
+    {% for f in form %}
+        {{ f.label_tag }}
+        {{ f }}
+    {% endfor %}
     <input type="submit" value="Upload">
-</form>
+
+</div>
 {% endblock %}

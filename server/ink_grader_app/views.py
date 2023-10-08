@@ -40,26 +40,8 @@ def get_student_score(quiz, answer_key, student_answers):
                 only the answers in a numbered order where an answer number corresponds to the question \
                 number from the quiz.\n" + "Quiz: " + quiz + "\n\nAnswer Key: " + answer_key + "\n\nStudent's Answers:" + student_answers},
 
-            {"role": "assistant", "content": "Of course, here is the students responses along with a total \
-                number of points awarded for the quiz, with points awarded per question shown, and comments on \
-                where the student went wrong on questions they didn't score full points. Include points awarded \
-                for each question. Make sure that the final grade awarded is the sum of points awarded for each question. \
-                Don't put a string after the 'content'. Return the response in the following form, please note that the \
-                values in the form are just examples -" + 
-                '{\
-                    "quiz": "loops", \
-                    "total_points": 10, \
-                    "questions": [\
-                        {\
-                            "number": 1, \
-                            "points": 2, \
-                            "student_answer": "example", \
-                            "feedback": "comments", \
-                            "points_awarded": 1},\
-                        ], \
-                    "final_grade":6 \
-                }'
-            }
+            {"role": "assistant", "content": "Of course, here is the students responses structured as question, points scored \
+                (if correct, full points; if partially correct, partial credit; if incorrect, 0 points), and feedback:"}
         ]
     }
 
@@ -159,8 +141,8 @@ def upload_file(request):
                     "final_grade": 6
                 }
 
-            # student_score = student_score['choices'][0]['message']['content']
-            return render(request, 'student_results.html', {'text': student_score})
+            student_score = student_score['choices'][0]['message']['content']
+            return render(request, 'student_results.html', {'text': temp})
 
     else:
         form = UploadFileForm()
