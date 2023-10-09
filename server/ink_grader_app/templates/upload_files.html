@@ -1,19 +1,55 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 class="text-center" >Welcome to <span style="font-weight: bold;">InkGrader</span></h1>
-<h5 class="text-center" style="margin: 3%;">"More time teaching, less time grading..."</h5>
-<form method="post" enctype="multipart/form-data" style="margin: 10px 40%;">
-    {% csrf_token %}
-    <div class="m-5 w-25">
-        {{ form.quiz_file }}
+<div id="main-div">
+    <h1 class="text-center" >Welcome to <span style="font-weight: bold;">InkGrader</span></h1>
+    <h5 class="text-center" style="margin: 3%;">"More time teaching, less time grading..."</h5>
+    <form method="post" enctype="multipart/form-data" style="margin: 10px 40%;" id="upload-form">
+        {% csrf_token %}
+        <div class="m-5 w-40">
+            <label style="margin-bottom: 5px;">Quiz Questions</label>
+            <div >
+                {{ form.quiz_file }}
+            </div>
+        </div>
+
+        <div class="m-5 w-40 p-1">
+            <label style="margin-bottom: 5px;">Answer Key</label>
+            <div >
+                {{ form.answer_key_file }}
+            </div>
+        </div>
+
+        <div class="m-5 w-40 p-1">
+            <label style="margin-bottom: 5px;">Student Answers</label>
+            <div >
+                {{ form.student_answers }}
+            </div>
+        </div>
+        <input type="submit" value="Upload" style="margin: 30px 40%; width: 90px; height: 40px;" class="btn btn-secondary">
+    </form>
+</div>
+
+
+<div class="text-center" id="loading-component" style="display: none;">
+    <div class="spinner-border" role="status">
+      <span class="sr-only">Loading...</span>
     </div>
-    <div class="m-5">
-        {{ form.answer_key_file }}
-    </div>
-    <div class="m-5">
-        {{ form.student_answers }}
-    </div>
-    <input type="submit" value="Upload" style="margin: 30px 40%; width: 90px; height: 40px;" class="btn btn-secondary">
-</form>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.getElementById("upload-form");
+        const loadingComponent = document.getElementById("loading-component");
+        const mainDiv = document.getElementById("main-div");
+    
+        form.addEventListener("submit", function () {
+            // Show the loading component when the form is submitted
+            loadingComponent.style.display = "block";
+            mainDiv.style.display = "none";
+        });
+    });
+</script>
+    
+
 {% endblock %}

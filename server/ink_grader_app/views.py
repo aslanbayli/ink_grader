@@ -22,18 +22,15 @@ GPT_SECRET_KEY = config("GPT_SECRET_KEY")
 GPT_ORG_NAME = config("GPT_ORG_NAME")
 
 
-
 def get_student_score(quiz, answer_key, student_answers):
-    url = "https://api.openai.com/v1/chat/completions"
+    url = f"https://{RESOURCE_NAME}.openai.azure.com/openai/deployments/{MODEL_NAME}/chat/completions?api-version=2023-05-15"
 
     headers = {
         "Content-Type": "application/json",
-        "Authorization": f"Bearer {GPT_SECRET_KEY}",
-        "OpenAI-Organization": GPT_ORG_NAME
+        "api-key": f"{SECRET_KEY1}"
     }
 
     data = {
-        "model": "gpt-4",
         "messages": [
             {"role": "system", "content": "You are a professor who is grading a student's quiz. \
                 The quiz questions, answer key, and student's answers are below:"},
@@ -83,8 +80,8 @@ def writing_to_text(image):
 def upload_file(request):
     if request.method == 'POST':
         form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
 
+        if form.is_valid():
             quiz = BytesIO((request.FILES['quiz_file']).read())
             answer_key = BytesIO((request.FILES['answer_key_file']).read())
             student_answers = (request.FILES['student_answers']).read()
@@ -109,16 +106,6 @@ def upload_file(request):
 
             # get student score
             student_score = get_student_score(quiz_text, answer_key_text, student_text)
-
-            temp = { 
-                    "Quiz Title": "Loops in Python", 
-                    "Total Points Possible": 10, 
-                    "Question 1": { "Points Earned": 2, "Feedback": "The student correctly identified the output as '2 4 6 8 10.'" }, 
-                    "Question 2": { "Points Earned": 2, "Feedback": "While the student's explanation was somewhat simplified, they clearly understand the key difference between a while loop and a for loop in Python." }, 
-                    "Question 3": { "Points Earned": 2, "Feedback": "The student correctly identified that the output would be '[2, 4]'." }, 
-                    "Question 4": { "Points Earned": 2, "Feedback": "Student provided the correct Python program using a while loop to print all even numbers from 1 to 10." }, 
-                    "Question 5": { "Points Earned": 2, "Feedback": "The student understand when a break statement is used in a loop, the output is correctly identified as 'apple'." },
-                    "Total Points Earned": 10 } 
                 
 
             student_score = student_score['choices'][0]['message']['content']
